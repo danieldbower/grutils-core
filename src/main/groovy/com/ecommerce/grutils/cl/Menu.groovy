@@ -30,7 +30,7 @@ class Menu {
 		return menuItems.selector.toString()
 	}
 	
-	boolean performMenuAction(String choice){
+	boolean performMenuAction(String choice, args){
 		MenuItem selected = null
 		
 		for(MenuItem menuItem : menuItems){
@@ -41,10 +41,19 @@ class Menu {
 		}
 		
 		if(selected){
-			selected.action()
+			if(args){
+				selected.action(args)
+			}else{
+				selected.action()
+			}
+			
 			return true
 		}else{
 			return false
 		}
+	}
+	
+	boolean performMenuAction(String choice){
+		performMenuAction(choice, null)
 	}
 }

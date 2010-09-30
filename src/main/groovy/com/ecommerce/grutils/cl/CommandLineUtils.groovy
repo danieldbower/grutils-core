@@ -121,4 +121,16 @@ class CommandLineUtils {
 	    }
 	    return choice
     }
+	
+	Date parseDate(String dateString){
+		if(!formatter){
+			formatter = DateFormat.getDateInstance(DateFormat.SHORT)
+		 }
+		
+		try{
+			formatter.parse(dateString)
+		}catch(ParseException e){
+			null
+		}
+	}
 }
