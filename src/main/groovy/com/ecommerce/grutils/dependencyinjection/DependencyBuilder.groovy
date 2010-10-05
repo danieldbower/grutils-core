@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.di
+package com.ecommerce.grutils.dependencyinjection
 
 /**
  * By extending AbstractDependencyBuilder and AbstractApplication.  You can take

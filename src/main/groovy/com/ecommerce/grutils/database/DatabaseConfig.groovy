@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.db
+package com.ecommerce.grutils.database
 
 import groovy.sql.Sql;
 

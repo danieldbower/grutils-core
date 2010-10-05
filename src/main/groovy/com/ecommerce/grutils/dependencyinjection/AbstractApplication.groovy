@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.di
+package com.ecommerce.grutils.dependencyinjection
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

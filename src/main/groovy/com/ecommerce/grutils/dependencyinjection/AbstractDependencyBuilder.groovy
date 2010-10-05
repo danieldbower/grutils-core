@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.di
+package com.ecommerce.grutils.dependencyinjection
 
 /**
  * Build off of here to get simple Dependency Injection

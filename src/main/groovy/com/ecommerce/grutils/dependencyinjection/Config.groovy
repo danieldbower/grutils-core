@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.di
+package com.ecommerce.grutils.dependencyinjection
 
 import java.util.Properties;
 

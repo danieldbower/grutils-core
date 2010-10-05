@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.cl
+package com.ecommerce.grutils.commandline
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

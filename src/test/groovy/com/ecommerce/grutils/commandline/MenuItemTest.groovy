@@ -1,7 +1,9 @@
-package com.ecommerce.grutils.cl
+package com.ecommerce.grutils.commandline
 
 import static org.junit.Assert.*;
 import org.junit.*;
+
+import com.ecommerce.grutils.commandline.MenuItem;
 
 class MenuItemTest {
 

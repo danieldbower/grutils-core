@@ -1,4 +1,4 @@
-package com.ecommerce.grutils.cl
+package com.ecommerce.grutils.commandline
 
 /**
  * MenuItems for a Menu
