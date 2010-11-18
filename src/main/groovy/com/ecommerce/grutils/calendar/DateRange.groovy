@@ -85,12 +85,20 @@ class DateRange {
 		}
 	}
 	
+	private static Date clearTime(Date date){
+		Calendar cal = Calendar.getInstance()
+		cal.setTime date
+		cal.set(Calendar.HOUR_OF_DAY, 0)
+		cal.set(Calendar.MINUTE, 0)
+		cal.set(Calendar.SECOND, 0)
+		return cal.getTime()
+	}
+	
 	static DateRange dateRangeForDay(Date date){
-		Date beg = date.clone()
-		beg.clearTime()
+		Date beg = clearTime(date)
 		
 		// 86399999 = (1000*60*60*24-1)  :not quite a day later
-		Date end =  new Date(beg.getTime() + 86399999)
+		Date end =  new Date(beg.getTime() + 1000*60*60*24-1000L)
 		
 		return new DateRange(beg:beg, end:end, type:DAY)
 	}
@@ -124,8 +132,7 @@ class DateRange {
 	static Date firstDayOfPeriod(Date date, int dayOf){
 		assert date
 		
-		Date first = date.clone()
-		first.clearTime()
+		Date first = clearTime(date)
 		first = first - date.getAt(dayOf) + 1
 		return first
 	}
@@ -148,11 +155,11 @@ class DateRange {
 	}
 	
 	Date dayInNextPeriod(){
-		new Date(end.getTime() + 1L)
+		new Date(end.getTime() + 1000L)
 	}
 	
 	Date dayInPrevPeriod(){
-		new Date(beg.getTime() - 1L)
+		new Date(beg.getTime() - 1000L)
 	}
 	
 	def sqlTimestampsFromRange(){
