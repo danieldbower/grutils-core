@@ -44,7 +44,7 @@ class Config {
     
     private Logger getLogger(){
         if(!logger){
-            logger = LoggerFactory.getLogger("com.ecommerce.grutil.di.Config")
+            logger = LoggerFactory.getLogger("com.ecommerce.grutil.dependencyinjection.Config")
         }
         return logger
     }

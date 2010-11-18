@@ -55,7 +55,7 @@ class DatabaseConfig {
 	
 	private Logger getLogger(){
 		if(!logger){
-			logger = LoggerFactory.getLogger("com.ecommerce.grutils.db.DatabaseConfig")
+			logger = LoggerFactory.getLogger("com.ecommerce.grutils.database.DatabaseConfig")
 		}
 		return logger
 	}
