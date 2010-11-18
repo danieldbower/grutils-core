@@ -1,5 +1,11 @@
 package com.ecommerce.grutils.network
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.jcraft.jsch.JSch;
+import com.jcraft.jsch.Logger;
+
 /**
  * Run ssh commands for a given server/user
  * 
@@ -14,6 +20,8 @@ class SshCommand {
 		this.remoteHost = remoteHost
 		this.remoteUser = remoteUser
 		this.remoteKey = remoteKey
+		
+		setupLoggingForJSch()
 	}
 	
 	String execute(String command){
@@ -28,4 +36,29 @@ class SshCommand {
 		
 		ant.getProject().getProperty("result")
 	}
+
+	protected void setupLoggingForJSch(){
+		public final Logger SLF4J_LOGGER = new Logger(){
+			
+			public boolean isEnabled(int level){
+				return true;
+			}
+			
+			public void log(int level, String message){
+				getLogger().info(message)
+			}
+		  };
+		
+		JSch.setLogger(SLF4J_LOGGER)
+	}	
+	
+	private org.slf4j.Logger logger
+	
+	protected org.slf4j.Logger getLogger(){
+		if(!logger){
+			logger = LoggerFactory.getLogger("com.ecommerce.grutils.network.SshCommand")
+		}
+		return logger
+	}
+
 }
