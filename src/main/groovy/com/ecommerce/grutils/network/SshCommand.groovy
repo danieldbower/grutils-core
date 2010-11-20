@@ -37,7 +37,7 @@ class SshCommand {
 		ant.getProject().getProperty("result")
 	}
 
-	protected void setupLoggingForJSch(){
+	protected static void setupLoggingForJSch(){
 		public final Logger SLF4J_LOGGER = new Logger(){
 			
 			public boolean isEnabled(int level){
@@ -49,12 +49,16 @@ class SshCommand {
 			}
 		  };
 		
-		JSch.setLogger(SLF4J_LOGGER)
+		if(!jschLoggingSetup){
+			JSch.setLogger(SLF4J_LOGGER)
+			jschLoggingSetup = true
+		}
 	}	
 	
-	private org.slf4j.Logger logger
+	private static boolean jschLoggingSetup = false
+	private static org.slf4j.Logger logger
 	
-	protected org.slf4j.Logger getLogger(){
+	protected static org.slf4j.Logger getLogger(){
 		if(!logger){
 			logger = LoggerFactory.getLogger("com.ecommerce.grutils.network.SshCommand")
 		}
