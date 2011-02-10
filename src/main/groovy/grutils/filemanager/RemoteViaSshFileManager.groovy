@@ -39,7 +39,7 @@ class RemoteViaSshFileManager implements FileManger {
 	}
 	
 	/* (non-Javadoc)
-	 * @see com.ecommerce.grutils.filemanager.FileManger#cp(java.lang.String, java.lang.String)
+	 * @see grutils.filemanager.FileManger#cp(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void cp(String origName, String copyName, boolean overwriteExisting) {
@@ -51,7 +51,7 @@ class RemoteViaSshFileManager implements FileManger {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ecommerce.grutils.filemanager.FileManger#ls(java.lang.String)
+	 * @see grutils.filemanager.FileManger#ls(java.lang.String)
 	 */
 	@Override
 	public List<String> ls(String directory) {
@@ -67,7 +67,7 @@ class RemoteViaSshFileManager implements FileManger {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ecommerce.grutils.filemanager.FileManger#mv(java.lang.String, java.lang.String)
+	 * @see grutils.filemanager.FileManger#mv(java.lang.String, java.lang.String)
 	 */
 	@Override
 	public void mv(String origName, String newName, boolean overwriteExisting) {
@@ -75,7 +75,7 @@ class RemoteViaSshFileManager implements FileManger {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ecommerce.grutils.filemanager.FileManger#rm(java.lang.String)
+	 * @see grutils.filemanager.FileManger#rm(java.lang.String)
 	 */
 	@Override
 	public void rm(String location) {
@@ -83,7 +83,7 @@ class RemoteViaSshFileManager implements FileManger {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.ecommerce.grutils.filemanager.FileManger#touch(java.lang.String)
+	 * @see grutils.filemanager.FileManger#touch(java.lang.String)
 	 */
 	@Override
 	public void touch(String fileName, boolean createIntermediateDirs) {
@@ -99,7 +99,7 @@ class RemoteViaSshFileManager implements FileManger {
 	
 	protected static Logger getLogger(){
 		if(!logger){
-			logger = LoggerFactory.getLogger("com.ecommerce.grutils.filemanager.RemoteViaSshFileManager")
+			logger = LoggerFactory.getLogger("grutils.filemanager.RemoteViaSshFileManager")
 		}
 		return logger
 	}

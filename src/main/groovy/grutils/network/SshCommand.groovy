@@ -60,7 +60,7 @@ class SshCommand {
 	
 	protected static org.slf4j.Logger getLogger(){
 		if(!logger){
-			logger = LoggerFactory.getLogger("com.ecommerce.grutils.network.SshCommand")
+			logger = LoggerFactory.getLogger("grutils.network.SshCommand")
 		}
 		return logger
 	}

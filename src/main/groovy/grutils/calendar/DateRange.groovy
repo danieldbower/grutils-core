@@ -1,13 +1,12 @@
 package grutils.calendar
 
-
 import java.sql.Timestamp 
 import java.text.DateFormat 
 import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Calculate the beginning and end timestamps for a day/week/month/year
+ * Calculates the beginning and end timestamps for a day/week/month/year
  * @author daniel
  *
  */
@@ -24,6 +23,9 @@ class DateRange {
 	
 	static final RANGE_TYPES = [DAY, WEEK, MONTH, YEAR]
 	
+	/**
+	 * Of this Sql type, what is the most immediate sub range, ie returns day for week.
+	 */
     String sqlSubType(){
 		switch(type){
 			case DAY:
@@ -44,6 +46,9 @@ class DateRange {
 		}
 	}
 	
+	/**
+	 * Of this Sql Type, what is the most immediate super range, ie returns week for day.
+	 */
 	String sqlSuperType(){
 		switch(type){
 			case DAY:
@@ -64,6 +69,11 @@ class DateRange {
 		}
 	}
 	
+	/**
+	 * Get a DateRange Object for the given date and Calendar period
+	 * @param thedate
+	 * @param type
+	 */
 	static DateRange dateRangeFor(Date thedate, String type){
 		switch(type){
 			case DAY:
@@ -94,6 +104,10 @@ class DateRange {
 		return cal.getTime()
 	}
 	
+	/**
+	 * Get a 1 day date range for the given date
+	 * @param date
+	 */
 	static DateRange dateRangeForDay(Date date){
 		Date beg = clearTime(date)
 		
@@ -103,14 +117,27 @@ class DateRange {
 		return new DateRange(beg:beg, end:end, type:DAY)
 	}
 	
+	/**
+	 * Get a 1 week date range including the given date
+	 * @param date
+	 */
 	static DateRange dateRangeForWeek(Date date){
 		return firstAndLastDayOfPeriod(date, Calendar.DAY_OF_WEEK, WEEK)
 	}
 	
+	/**
+	 * Get a 1 month date range including the given date
+	 * @param date
+	 */
 	static DateRange dateRangeForMonth(Date date){
 		return firstAndLastDayOfPeriod(date, Calendar.DAY_OF_MONTH, MONTH)
 	}
 	
+	/**
+	 * Get a 1 year date range including the given date
+	 * @param date
+	 * @return
+	 */
 	static DateRange dateRangeForYear(Date date){
 		return firstAndLastDayOfPeriod(date, Calendar.DAY_OF_YEAR, YEAR)
 	}
@@ -154,14 +181,23 @@ class DateRange {
 		return new Date((first + maxForPeriod).getTime() -1)
 	}
 	
+	/**
+	 * Get a date that is in the next date range from this one
+	 */
 	Date dayInNextPeriod(){
 		new Date(end.getTime() + 1000L)
 	}
 	
+	/**
+	 * Get a date that is in the previous date range from this one
+	 */
 	Date dayInPrevPeriod(){
 		new Date(beg.getTime() - 1000L)
 	}
 	
+	/**
+	 * Get sql Timestamps for this range
+	 */
 	def sqlTimestampsFromRange(){
 		[new Timestamp(beg.getTime()), new Timestamp(end.getTime())]
 	}

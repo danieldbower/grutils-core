@@ -1,12 +1,11 @@
 package grutils.database
 
-import groovy.sql.Sql;
+import groovy.sql.Sql
+import javax.sql.DataSource
+import org.apache.commons.dbcp.BasicDataSource
 
-import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.BasicDataSource;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 /**
  * Generic Class for creating and closing a datasource
@@ -55,7 +54,7 @@ class DatabaseConfig {
 	
 	private Logger getLogger(){
 		if(!logger){
-			logger = LoggerFactory.getLogger("com.ecommerce.grutils.database.DatabaseConfig")
+			logger = LoggerFactory.getLogger("grutils.database.DatabaseConfig")
 		}
 		return logger
 	}
