@@ -1,7 +1,8 @@
 apply plugin: 'eclipse'
 apply plugin: 'groovy'
+apply plugin: 'maven'
 
-version = '2.0.0'
+version = '2.0.1'
 group = 'com.ecommerce.grutils'
 
 sourceCompatibility = '1.5'
@@ -28,11 +29,6 @@ dependencies {
 
     groovy group: 'org.codehaus.groovy', name: 'groovy', version: '1.7.5'
     testCompile group: 'junit', name: 'junit', version: '4.7'
-    testCompile group: 'org.easymock', name: 'easymock', version: '2.0'
-    
-    //ssh
-    compile group: 'org.apache.ant', name:'ant-jsch', version:'1.8.1'
-    compile group: 'com.jcraft', name:'jsch', version:'0.1.42'
     
     //logging
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.5.11'
@@ -41,10 +37,5 @@ dependencies {
     compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.4'
     
     //email
-    runtime group: 'org.apache.ant', name:'ant-javamail', version:'1.8.1'
-    
-    //runtime logging
-    runtime group: 'ch.qos.logback', name: 'logback-core', version: '0.9.20'
-    runtime group: 'ch.qos.logback', name: 'logback-classic', version: '0.9.20'
-    
+    runtime group: 'org.apache.ant', name:'ant-javamail', version:'1.7.1'
 }
