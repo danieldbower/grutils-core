@@ -2,7 +2,7 @@ apply plugin: 'eclipse'
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
-version = '2.0.1'
+version = '2.0.2'
 group = 'com.ecommerce.grutils'
 
 sourceCompatibility = '1.5'

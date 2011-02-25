@@ -8,6 +8,8 @@ class Duration {
 	def weeks = 0
 	def years = 0
 	
+	def totalInSeconds = 0
+	
 	/**
 	* Format a duration that is in seconds into a hash 
 	* 
@@ -16,6 +18,8 @@ class Duration {
 	*/
    Duration(num){
 	   if(!num) return
+	   
+	   totalInSeconds = num
 	   
 	   if(num instanceof BigDecimal){
 		   	seconds = num.toBigInteger()
