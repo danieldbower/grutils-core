@@ -24,6 +24,36 @@ class DateRange {
 	static final RANGE_TYPES = [DAY, WEEK, MONTH, YEAR]
 	
 	/**
+	 * Number of day names included in the range 
+	 */
+	private Map dayNamesInRange
+	
+	/**
+	 * How many of a given Day are included (at least one second) in the range
+	 */
+	int calcDayNamesInRange(int day){
+		def dayNamesInRangeLocal
+		
+		if(!dayNamesInRange){
+			dayNamesInRangeLocal = [(Calendar.SUNDAY):0, (Calendar.MONDAY):0, (Calendar.TUESDAY):0, (Calendar.WEDNESDAY):0, 
+					(Calendar.THURSDAY):0, (Calendar.FRIDAY):0, (Calendar.SATURDAY):0]
+			
+			(beg..end).each{Date time ->
+				if(time<end){
+					Calendar cal = Calendar.getInstance()
+					cal.setTime(time)
+					int dayForTime = cal.get(Calendar.DAY_OF_WEEK)
+					dayNamesInRangeLocal[dayForTime]=dayNamesInRangeLocal[dayForTime] + 1
+				}
+			}
+			
+			dayNamesInRange = dayNamesInRangeLocal
+		}
+		
+		return dayNamesInRange[day]
+	}
+	
+	/**
 	 * Of this Sql type, what is the most immediate sub range, ie returns day for week.
 	 */
     String sqlSubType(){

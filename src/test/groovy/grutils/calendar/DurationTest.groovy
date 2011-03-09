@@ -1,8 +1,6 @@
 package grutils.calendar
 
 import static org.junit.Assert.*;
-import grutils.calendar.Duration;
-
 import org.junit.*;
 
 class DurationTest {
