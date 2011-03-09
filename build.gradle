@@ -11,7 +11,7 @@ targetCompatibility = '1.5'
 manifest.mainAttributes(
                                             'Provider': group,
                                             'Implementation-Version': version,
-                                            'Built-With': ('gradle-' + new GradleVersion().getVersion()),
+                                            'Built-With': ('gradle-' + project.getGradle().getGradleVersion()),
                                             'Class-Path': '.'
                                             )
                                             
