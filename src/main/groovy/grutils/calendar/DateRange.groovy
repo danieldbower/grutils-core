@@ -32,10 +32,16 @@ class DateRange {
 	 * How many of a given Day are included (at least one second) in the range
 	 */
 	int calcDayNamesInRange(int day){
-		def dayNamesInRangeLocal
-		
 		if(!dayNamesInRange){
-			dayNamesInRangeLocal = [(Calendar.SUNDAY):0, (Calendar.MONDAY):0, (Calendar.TUESDAY):0, (Calendar.WEDNESDAY):0, 
+			calcDayNamesInRange()
+		}
+		
+		return dayNamesInRange[day]
+	}
+	
+	Map calcDayNamesInRange(){
+		if(!dayNamesInRange){
+			def dayNamesInRangeLocal = [(Calendar.SUNDAY):0, (Calendar.MONDAY):0, (Calendar.TUESDAY):0, (Calendar.WEDNESDAY):0, 
 					(Calendar.THURSDAY):0, (Calendar.FRIDAY):0, (Calendar.SATURDAY):0]
 			
 			(beg..end).each{Date time ->
@@ -50,9 +56,9 @@ class DateRange {
 			dayNamesInRange = dayNamesInRangeLocal
 		}
 		
-		return dayNamesInRange[day]
+		dayNamesInRange
 	}
-	
+
 	/**
 	 * Of this Sql type, what is the most immediate sub range, ie returns day for week.
 	 */
