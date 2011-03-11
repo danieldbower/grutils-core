@@ -11,6 +11,7 @@ import java.util.Date;
  *
  */
 class DateRange {
+	static final String HOUR = 'HOUR'
 	static final String DAY = 'DAY'
 	static final String WEEK = 'WEEK'
 	static final String MONTH = 'MONTH'
@@ -21,7 +22,7 @@ class DateRange {
 	Date end
 	String type
 	
-	static final RANGE_TYPES = [DAY, WEEK, MONTH, YEAR]
+	static final RANGE_TYPES = [HOUR, DAY, WEEK, MONTH, YEAR]
 	
 	/**
 	 * Number of day names included in the range 
@@ -58,12 +59,119 @@ class DateRange {
 		
 		dayNamesInRange
 	}
-
+	
+	static List<DateRange> hoursBetween(Date start, Date end){
+		//calculate all hours ranges between queryStart and queryEnd
+		//needs to be in order.
+		List<DateRange> hours = [DateRange.dateRangeForHour(start)]
+		
+		DateRange hour = hours[0]
+		while (hour.end<end){
+			hour = hour.nexthour()
+			hours.add hour
+		}
+		
+		hours
+	}
+	
+	/**
+	 * This range is completely before Range b, ie. its ending is befor b's beginning
+	 */
+	boolean beforeRange(DateRange b){
+		this.end<b.beg
+	}
+	
+	/**
+	 * This range is completely after Range b, ie. its beginning is after b's end
+	 */
+	boolean afterRange(DateRange b){
+		b.end<this.beg
+	}
+	
+	/**
+	 * This range is completely within range b
+	 */
+	boolean containedInRange(DateRange b){
+		((this.beg>=b.beg) && (this.end<=b.end)) 
+	}
+	
+	/**
+	 * This range overlaps only the beginning of b
+	 */
+	boolean overlappingBeginningOfRange(DateRange b){
+		((this.beg<b.beg) && (this.end<=b.end) && (this.end>b.beg))
+	}
+	
+	/**
+	 * This range overlaps only the ending of b
+	 */
+	boolean overlappingEndingOfRange(DateRange b){
+		((this.beg>=b.beg) && (this.end>b.end) && (this.beg<b.end))
+	}
+	
+	/**
+	 * For a bunch of ranges, total the time within an ordered (exclusive) range
+	 * @param ranges - A list of DateRanges to separate into "buckets"
+	 * @param hoursInPeriod - An ordered list of DateRanges that are completely exclusive and have no gaps (These are the "Buckets")
+	 */
+	static def dropRangesIntoHours(Collection<DateRange> ranges, List<DateRange> hoursInPeriod){
+		Map buckets = [:]
+		hoursInPeriod.each{ hour ->
+			buckets.put hour, 0L
+		}
+		
+		for (DateRange range : ranges){
+		   for(DateRange hour : hoursInPeriod){
+			 //is the hour after the range? if so skip to the next range
+			 if(hour.afterRange(range)){
+			   break
+			 }
+			  
+			 //is the hour before the date range? if so skip to next hour
+			 if(hour.beforeRange(range)){
+			   continue  
+			 }  
+			 
+			 //is the hour overlapping the beginning and only the beginning?
+			 if(hour.overlappingBeginningOfRange(range)){
+			   // pull out overlapping bit
+			   buckets[hour] = buckets[hour] + (hour.end.getTime() - range.beg.getTime()) +1
+			   continue
+			 }
+			   
+			 if(range.containedInRange(hour)){
+			   //add entire range
+			   buckets[hour] = buckets[hour] + (range.end.getTime() - range.beg.getTime())
+			   continue
+			 }
+				  
+			 if(hour.containedInRange(range)){
+			   //add entire hour  
+			   buckets[hour] = buckets[hour] + (hour.end.getTime()-hour.beg.getTime()) +1
+			   continue
+			 }
+			
+			 if(hour.overlappingEndingOfRange(range)){
+			   //pull out overlapping bit  
+			   buckets[hour] = buckets[hour] + (range.end.getTime() - hour.beg.getTime())
+			   continue
+			 }
+			   
+			 throw new Exception("This point should not have been reached.  There's a bug in the if's")
+		   }
+		}
+		
+		return buckets
+	}
+	
 	/**
 	 * Of this Sql type, what is the most immediate sub range, ie returns day for week.
 	 */
     String sqlSubType(){
 		switch(type){
+			case HOUR:
+				'minute'
+				break
 			case DAY:
 				'hour'
 				break
@@ -87,6 +195,9 @@ class DateRange {
 	 */
 	String sqlSuperType(){
 		switch(type){
+			case HOUR:
+				'day'
+				break
 			case DAY:
 				'week'
 				break
@@ -112,6 +223,9 @@ class DateRange {
 	 */
 	static DateRange dateRangeFor(Date thedate, String type){
 		switch(type){
+			case HOUR:
+				dateRangeForHour(thedate)
+				break
 			case DAY:
 				dateRangeForDay(thedate)
 				break
@@ -129,6 +243,16 @@ class DateRange {
 				null
 				break
 		}
+	}
+	
+	static DateRange dateRangeForHour(Date date){
+		Calendar cal = Calendar.getInstance()
+		cal.setTime date
+		cal.set(Calendar.MINUTE, 0)
+		cal.set(Calendar.SECOND, 0)
+		Date beg = cal.getTime()
+		Date end = new Date(beg.getTime() + (1000*60*60 - 1))
+		return new DateRange(beg:beg, end:end, type:HOUR)
 	}
 	
 	private static Date clearTime(Date date){
@@ -232,9 +356,28 @@ class DateRange {
 	}
 	
 	/**
+	 * Create another DateRange object for the hour after this one.  Throws an exception when this DateRange is not of type 'HOUR'
+	 */
+	DateRange nexthour(){
+		if(this.type==HOUR){
+			return new DateRange(beg:new Date(beg.getTime() + 1000*60*60), end:new Date(end.getTime() + 1000*60*60), type:HOUR)
+		}else{
+			throw new Exception("This will only work on date ranges of type 'HOUR'")
+		}
+	}
+	
+	/**
 	 * Get sql Timestamps for this range
 	 */
 	def sqlTimestampsFromRange(){
 		[new Timestamp(beg.getTime()), new Timestamp(end.getTime())]
+	}
+	
+	Long size(){
+		(end.getTime() - beg.getTime())
+	}
+	
+	String toString(){
+		return "type: ${type} - beg: ${beg} - end: ${end}"
 	}
 }
