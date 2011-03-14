@@ -1,6 +1,9 @@
 package grutils.calendar;
 
 import static org.junit.Assert.*;
+
+import java.util.Date;
+
 import org.junit.*;
 
 public class DateRangeTest {
@@ -105,6 +108,15 @@ public class DateRangeTest {
 	DateRange range13 = new DateRange(beg:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 04:27:22'),
 		end:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 04:48:22'))
 	
+	DateRange range14 = new DateRange(beg:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 01:54:39'), 
+		end:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 04:00:00'))
+	
+	DateRange range15 = new DateRange(beg:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 01:54:39'),
+		end:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 03:00:00'))
+	
+	DateRange range16 = new DateRange(beg:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 03:59:59'),
+		end:Date.parse('yyyy-MM-dd HH:mm:ss', '2011-02-27 04:00:00'))
+	
 	@Test
 	void beforeRange(){
 		assertFalse range1.beforeRange(hour1)
@@ -116,6 +128,9 @@ public class DateRangeTest {
 		assertFalse range7.beforeRange(hour1)
 		assertFalse range8.beforeRange(hour1)
 		assertFalse range9.beforeRange(hour1)
+		assertFalse range14.beforeRange(hour1)
+		assertFalse range15.beforeRange(hour1)
+		assertFalse range16.beforeRange(hour1)
 	}
 	
 	@Test
@@ -127,6 +142,9 @@ public class DateRangeTest {
 		assertFalse range11.afterRange(hour1)
 		assert range12.afterRange(hour1)
 		assert range13.afterRange(hour1)
+		assertFalse range14.afterRange(hour1)
+		assertFalse range15.afterRange(hour1)
+		assertFalse range16.afterRange(hour1)
 	}
 	
 	@Test
@@ -144,6 +162,11 @@ public class DateRangeTest {
 		assertFalse range11.containedInRange(hour1)
 		assertFalse range12.containedInRange(hour1)
 		assertFalse range13.containedInRange(hour1)
+		assertFalse range14.containedInRange(hour1)
+		assertFalse range15.containedInRange(hour1)
+		assertFalse range16.containedInRange(hour1)
+		
+		assert hour1.containedInRange(range14)
 	}
 	
 	@Test
@@ -161,6 +184,9 @@ public class DateRangeTest {
 		assertFalse range11.overlappingBeginningOfRange(hour1)
 		assertFalse range12.overlappingBeginningOfRange(hour1)
 		assertFalse range13.overlappingBeginningOfRange(hour1)
+		assertFalse range14.overlappingBeginningOfRange(hour1)
+		assert range15.overlappingBeginningOfRange(hour1)
+		assertFalse range16.overlappingBeginningOfRange(hour1)
 	}
 	
 	@Test
@@ -178,6 +204,9 @@ public class DateRangeTest {
 		assert range11.overlappingEndingOfRange(hour1)
 		assertFalse range12.overlappingEndingOfRange(hour1)
 		assertFalse range13.overlappingEndingOfRange(hour1)
+		assertFalse range14.overlappingEndingOfRange(hour1)
+		assertFalse range15.overlappingEndingOfRange(hour1)
+		assertTrue range16.overlappingEndingOfRange(hour1)
 	}
 	
 	@Test
@@ -195,6 +224,9 @@ public class DateRangeTest {
 		testRangeInDropRangesIntoHours(range11)
 		testRangeInDropRangesIntoHours(range12)
 		testRangeInDropRangesIntoHours(range13)
+		testRangeInDropRangesIntoHours(range14)
+		testRangeInDropRangesIntoHours(range15)
+		testRangeInDropRangesIntoHours(range16)
 	}
 	
 	void testRangeInDropRangesIntoHours(range){
@@ -234,4 +266,9 @@ public class DateRangeTest {
 		assertEquals(total2, total)
 	}
 	
+	
+	@Test
+	void testSize(){
+		assert 1000L==range16.size()
+	}
 }

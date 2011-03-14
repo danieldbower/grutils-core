@@ -99,14 +99,14 @@ class DateRange {
 	 * This range overlaps only the beginning of b
 	 */
 	boolean overlappingBeginningOfRange(DateRange b){
-		((this.beg<b.beg) && (this.end<=b.end) && (this.end>b.beg))
+		((this.beg<b.beg) && (this.end<=b.end) && (this.end>=b.beg))
 	}
 	
 	/**
 	 * This range overlaps only the ending of b
 	 */
 	boolean overlappingEndingOfRange(DateRange b){
-		((this.beg>=b.beg) && (this.end>b.end) && (this.beg<b.end))
+		((this.beg>=b.beg) && (this.end>b.end) && (this.beg<=b.end))
 	}
 	
 	/**
@@ -157,7 +157,7 @@ class DateRange {
 			   continue
 			 }
 			   
-			 throw new Exception("This point should not have been reached.  There's a bug in the if's")
+			 throw new Exception("This point should not have been reached.  There's a bug in the if's.  Halted on DateRange ${range} in hour ${hour}")
 		   }
 		}
 		
