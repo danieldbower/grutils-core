@@ -75,5 +75,7 @@ class Duration {
 	   if(hours) sb.append("${hours}h ")
 	   if(minutes) sb.append("${minutes}m ")
 	   if(seconds) sb.append("${seconds}s")
+	   
+	   sb.toString()
    }
 }

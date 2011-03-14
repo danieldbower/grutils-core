@@ -91,5 +91,20 @@ class DurationTest {
 		assertEquals "1y 1d 1h 1m 2s", duration.toString()
 	}
 	
+	@Test
+	void constructor46800seconds(){
+		duration = new Duration(46800)
+		
+		assertEquals 0, duration.years.intValue()
+		assertEquals 0, duration.weeks
+		assertEquals 0, duration.days.intValue()
+		assertEquals 13, duration.hours.intValue()
+		assertEquals 0, duration.minutes.intValue()
+		assertEquals 0, duration.seconds.intValue()
+		
+		assertEquals "13h ", duration.toString()
+		
+	}
+	
 	
 }
