@@ -244,7 +244,7 @@ public class DateRangeTest {
 		def total = 0L
 		bucketed.each{
 			println it
-			total +=it.value
+			total +=it.value[0]
 		}
 		return total
 	}

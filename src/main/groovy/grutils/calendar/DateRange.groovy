@@ -113,11 +113,12 @@ class DateRange {
 	 * For a bunch of ranges, total the time within an ordered (exclusive) range
 	 * @param ranges - A list of DateRanges to separate into "buckets"
 	 * @param hoursInPeriod - An ordered list of DateRanges that are completely exclusive and have no gaps (These are the "Buckets")
+	 * @return map with DateRange of bucket as key, a sum of the ranges in the bucket and a count of the ranges in the bucket
 	 */
-	static def dropRangesIntoHours(Collection<DateRange> ranges, List<DateRange> hoursInPeriod){
+	static Map<DateRange, List> dropRangesIntoHours(Collection<DateRange> ranges, List<DateRange> hoursInPeriod){
 		Map buckets = [:]
 		hoursInPeriod.each{ hour ->
-			buckets.put hour, 0L
+			buckets.put hour, [0L,0]
 		}
 		
 		for (DateRange range : ranges){
@@ -135,25 +136,29 @@ class DateRange {
 			 //is the hour overlapping the beginning and only the beginning?
 			 if(hour.overlappingBeginningOfRange(range)){
 			   // pull out overlapping bit
-			   buckets[hour] = buckets[hour] + (hour.end.getTime() - range.beg.getTime()) +1
+			   buckets[hour][0] = buckets[hour][0] + (hour.end.getTime() - range.beg.getTime()) +1
+			   buckets[hour][1] = buckets[hour][1] + 1
 			   continue
 			 }
 			   
 			 if(range.containedInRange(hour)){
 			   //add entire range
-			   buckets[hour] = buckets[hour] + (range.end.getTime() - range.beg.getTime())
+			   buckets[hour][0] = buckets[hour][0] + (range.end.getTime() - range.beg.getTime())
+			   buckets[hour][1] = buckets[hour][1] + 1
 			   continue
 			 }
 				  
 			 if(hour.containedInRange(range)){
 			   //add entire hour  
-			   buckets[hour] = buckets[hour] + (hour.end.getTime()-hour.beg.getTime()) +1
+			   buckets[hour][0] = buckets[hour][0] + (hour.end.getTime()-hour.beg.getTime()) +1
+			   buckets[hour][1] = buckets[hour][1] + 1
 			   continue
 			 }
 			
 			 if(hour.overlappingEndingOfRange(range)){
 			   //pull out overlapping bit  
-			   buckets[hour] = buckets[hour] + (range.end.getTime() - hour.beg.getTime())
+			   buckets[hour][0] = buckets[hour][0] + (range.end.getTime() - hour.beg.getTime())
+			   buckets[hour][1] = buckets[hour][1] + 1
 			   continue
 			 }
 			   
