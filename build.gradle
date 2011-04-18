@@ -36,6 +36,11 @@ dependencies {
     //database
     compile group: 'commons-dbcp', name: 'commons-dbcp', version:'1.4'
     
+    //system
+    compile group: 'commons-lang', name: 'commons-lang', version:'2.6'
+    
     //email
     runtime group: 'org.apache.ant', name:'ant-javamail', version:'1.7.1'
+    
+    
 }

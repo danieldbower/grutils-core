@@ -18,6 +18,7 @@
 	<classpathentry sourcepath="/home/daniel/.gradle/cache/javax.mail/mail/sources/mail-1.4-sources.jar" kind="lib" path="/home/daniel/.gradle/cache/javax.mail/mail/jars/mail-1.4.jar" exported="true"/>
 	<classpathentry kind="lib" path="/home/daniel/.gradle/cache/asm/asm-util/jars/asm-util-3.2.jar" exported="true"/>
 	<classpathentry kind="lib" path="/home/daniel/.gradle/cache/asm/asm-tree/jars/asm-tree-3.2.jar" exported="true"/>
+	<classpathentry sourcepath="/home/daniel/.gradle/cache/commons-lang/commons-lang/sources/commons-lang-2.6-sources.jar" kind="lib" path="/home/daniel/.gradle/cache/commons-lang/commons-lang/jars/commons-lang-2.6.jar" exported="true"/>
 	<classpathentry kind="lib" path="/home/daniel/.gradle/cache/org.apache.ant/ant/jars/ant-1.7.1.jar" exported="true"/>
 	<classpathentry kind="lib" path="/home/daniel/.gradle/cache/asm/asm-analysis/jars/asm-analysis-3.2.jar" exported="true"/>
 	<classpathentry kind="lib" path="/home/daniel/.gradle/cache/asm/asm/jars/asm-3.2.jar" exported="true"/>
