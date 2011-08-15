@@ -3,7 +3,7 @@ apply plugin: 'groovy'
 apply plugin: 'maven'
 
 version = '2.0.7'
-group = 'com.ecommerce.grutils'
+group = 'com.bowerstudios.grutils'
 
 sourceCompatibility = '1.5'
 targetCompatibility = '1.5'
